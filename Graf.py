@@ -12,7 +12,7 @@ from tkinter import filedialog
 
 
 class Application(tk.Tk):
-    name = 'Grafy'
+    name = 'Graf'
 
     def __init__(self):
         super().__init__(className=self.name)
