@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 Created on Tue Apr  2 10:00:39 2019
+
 @author: mah35070
 """
 
@@ -16,11 +17,10 @@ class Application(tk.Tk):
 
     def __init__(self):
         super().__init__(className=self.name)
-        
         self.title(self.name)
-        self.bind("<Escape>", self.quit)
+        self.config(borderwidth=5)
         
-        self.lblffce = LabelFrame(self, text="Graf matematické funkce", padx=5, pady=5)
+        self.lblffce = LabelFrame(self, text="Graf mat. funkce", padx=5, pady=5)
         self.lblffce.grid(column = 1, row = 1)
         
         self.lblfce = Label(self.lblffce)
@@ -56,8 +56,8 @@ class Application(tk.Tk):
         self.doe=Entry(self.lblodd, textvariable=self.Sdo,width=10)
         self.doe.grid(row=2,column=2)
         
-        self.ugraf= Button(self,text=u"Vytvoř graf", width=7, height=4, command=self.vytvorgraf)
-        self.ugraf.grid(row=1,column=2)
+        self.vg= Button(self,text=u"Vytvoř graf", width=7, height=4, command=self.vytvorgraf)
+        self.vg.grid(row=1,column=2)
         
         self.genztext=LabelFrame(self,text=u"Generuj z text", padx=25)
         self.genztext.grid(row=2,column=1)
@@ -77,69 +77,70 @@ class Application(tk.Tk):
         self.oylblf=LabelFrame(self,text=u"Popisy os", padx=40)
         self.oylblf.grid(row=3,column=1)
         
-        self.oxmess = Message(self.oylblf, text=u"Osa X:")
+        self.oxmess = Message(self.oylblf, text=u"osa x:")
         self.oxmess.grid(row=1, column=1)
         
         self.ox=StringVar()
         
-        self.oxentr=Entry(self.oylblf, textvariable=self.osx,width=10)
+        self.oxentr=Entry(self.oylblf, textvariable=self.ox,width=10)
         self.oxentr.grid(row=1,column=2)
         
-        self.oymess = Message(self.oylblf, text=u"Osa Y:")
+        self.oymess = Message(self.oylblf, text=u"osa y:")
         self.oymess.grid(row=2, column=1)
         
         self.oy=StringVar()
         
-        self.oyentr=Entry(self.oylblf, textvariable=self.osy,width=10)
+        self.oyentr=Entry(self.oylblf, textvariable=self.oy,width=10)
         self.oyentr.grid(row=2,column=2)
-        
-def vybrsoubor(self):
-    cesta= filedialog.askopenfilename(title='Vyber soubor')    
-    if cesta != '':
-        self.a.set(cesta)
 
-def vytvorgraf(self):
-    try:
-        od=float(self.sod.get())
-        do=float(self.sdo.get())
-        x=lab.linspace(od, do, 500)
-        if self.v.get() == 1:
-            y=lab.sin(x)
-        elif self.v.get() == 2:
-            y=lab.log10(x)
-        elif self.v.get() == 3:
-            y=lab.exp(x)
-        lab.figure()
-        lab.plot(x,y)
-        lab.xlabel(self.osx.get())
-        lab.ylabel(self.osy.get())
-        lab.grid(True)
-        lab.show()
-    except:
-        messagebox.showerror(title='Chybné meze', message='Meze osy X\njako reálná čísla')        
-            
-def vytvorgrsoubor(self):
+
+    def vybrsoubor(self):
+        cesta= filedialog.askopenfilename(title='Vyber soubor')    
+        if cesta != '':
+            self.asv.set(cesta)         
+
+    def vytvorgraf(self):
         try:
-            cesta = self.a.get()
-            f = open(cesta,'r')
-            x=[]
-            y=[]
-            while 1:
-                radek=f.readline()
-                if radek=='':
-                    break
-                cisla=radek.split()
-                x.append( float(cisla[0]) )
-                y.append( float(cisla[1]) )
-            f.close()
+            Od=float(self.Sod.get())
+            Do=float(self.Sdo.get())
+            x=lab.linspace(Od, Do, 500)
+            if self.v.get() == 1:
+                y=lab.sin(x)
+            elif self.v.get() == 2:
+                y=lab.log10(x)
+            elif self.v.get() == 3:
+                y=lab.exp(x)
             lab.figure()
             lab.plot(x,y)
-            lab.xlabel(self.osx.get())
-            lab.ylabel(self.osy.get())
+            lab.xlabel(self.ox.get())
+            lab.ylabel(self.oy.get())
             lab.grid(True)
             lab.show()
         except:
-            messagebox.showerror(title='Chybný formát', message='Graf se nepodařilo vytvořit,\n zkontrolujte fomát souboru.')
+            messagebox.showerror(title='Chybné meze', message='Meze osy X\njako reálná čísla')        
+    
+    def vytvorgrsoubor(self):
+            try:
+                cesta = self.asv.get()
+                f = open(cesta,'r')
+                x=[]
+                y=[]
+                while 1:
+                    radek=f.readline()
+                    if radek=='':
+                        break
+                    cisla=radek.split()
+                    x.append( float(cisla[0]) )
+                    y.append( float(cisla[1]) )
+                f.close()
+                lab.figure()
+                lab.plot(x,y)
+                lab.xlabel(self.ox.get())
+                lab.ylabel(self.oy.get())
+                lab.grid(True)
+                lab.show()
+            except:
+                messagebox.showerror(title='Chybný formát', message='Graf se nepodařilo vytvořit,\n zkontrolujte fomát souboru.')
         
 app = Application()
 app.mainloop()
