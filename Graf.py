@@ -104,11 +104,11 @@ class Application(tk.Tk):
             Od=float(self.Sod.get())
             Do=float(self.Sdo.get())
             x=lab.linspace(Od, Do, 500)
-            if self.v.get() == 1:
+            if self.v.get() == 0:
                 y=lab.sin(x)
-            elif self.v.get() == 2:
+            elif self.v.get() == 1:
                 y=lab.log10(x)
-            elif self.v.get() == 3:
+            elif self.v.get() == 2:
                 y=lab.exp(x)
             lab.figure()
             lab.plot(x,y)
